@@ -18,7 +18,7 @@ const App: React.FC = () => {
     setError(null);
     try {
       const data = await fetchMediumPosts(username);
-      // Take only the first 3 as requested
+      // Take only the first 3
       setPosts(data.items.slice(0, 3));
     } catch (err) {
       setError(
