@@ -69,14 +69,15 @@ const App: React.FC = () => {
       style={heroBackground}
     >
       <main className="bg-white md:rounded-2xl dark:bg-background max-w-[70rem] md:m-40 md:mt-20 md:mb-20 opacity-[1] flex flex-col items-center py-12 px-4 sm:py-20">
-        <div className="w-full max-w-3xl text-center space-y-6">
-          <motion.div
-            className="space-y-2"
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            transition={{ duration: 0.8 }}
-          >
+        {/* Hero Text */}
+        <motion.div
+          className="w-full max-w-3xl text-center space-y-6"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="space-y-2">
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
               Verify <span className="gradient-text">Internship</span>{" "}
               Credentials
@@ -85,8 +86,9 @@ const App: React.FC = () => {
               Confirm the validity of Leafclutch certificates. Just enter the
               ID, email, or name below.
             </p>
-          </motion.div>
+          </div>
 
+          {/* Search Form */}
           <form
             onSubmit={handleSearch}
             className="relative group max-w-2xl mx-auto mt-8"
@@ -109,18 +111,19 @@ const App: React.FC = () => {
                 }`}
               />
             </motion.div>
+
             <input
               type="text"
-              className=" w-full py-4 pl-12 pr-32 text-lg rounded-lg shadow-xl
-                            bg-background text-foreground
-                            border border-input
-                            placeholder:text-muted-foreground
-                            focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring
-                            transition-colors"
+              className="w-full py-4 pl-12 pr-32 text-lg rounded-lg shadow-xl
+                bg-background text-foreground border border-input
+                placeholder:text-muted-foreground
+                focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring
+                transition-colors"
               placeholder="Enter ID, email, or full name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+
             <motion.button
               type="submit"
               disabled={status === "searching"}
@@ -132,6 +135,7 @@ const App: React.FC = () => {
             </motion.button>
           </form>
 
+          {/* Quick Info */}
           <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-muted-foreground">
             {[
               "Official Verification",
@@ -150,19 +154,22 @@ const App: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <section className="mt-16 w-full max-w-2xl mx-auto min-h-[300px]">
-          <AnimatePresence>
+        {/* Results Section */}
+        <section className="relative mt-16 w-full max-w-2xl mx-auto min-h-[350px]">
+          <AnimatePresence mode="wait">
+            {/* Found Card */}
             {status === "found" && result && (
               <motion.div
-                className="p-6 sm:p-8 flex flex-col md:flex-row gap-8 items-center md:items-start bg-card text-foreground border border-border rounded-3xl shadow-lg"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.6 }}
+                key="found"
+                className="absolute inset-0 flex flex-col md:flex-row gap-8 items-start bg-card text-foreground border border-border rounded-3xl shadow-lg p-6 sm:p-8"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
               >
-                {/* Left and Right side same as your original */}
+                {/* Left */}
                 <div className="flex flex-col items-center gap-5 shrink-0">
                   <div className="relative group">
                     <div className="absolute -inset-1 rounded-full blur opacity-25 bg-primary/40 group-hover:opacity-50 transition duration-1000"></div>
@@ -172,7 +179,6 @@ const App: React.FC = () => {
                       className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card bg-muted"
                     />
                   </div>
-
                   <motion.div
                     className="flex items-center justify-center p-2.5 rounded-full bg-success/10 border border-success/20 text-success shadow-sm"
                     whileHover={{ scale: 1.1 }}
@@ -181,6 +187,7 @@ const App: React.FC = () => {
                   </motion.div>
                 </div>
 
+                {/* Right */}
                 <div className="flex-grow space-y-4 w-full">
                   <div>
                     <div className="flex items-center justify-between">
@@ -191,7 +198,6 @@ const App: React.FC = () => {
                         {result.id}
                       </span>
                     </div>
-
                     <h2 className="text-2xl sm:text-3xl font-bold">
                       {result.name}
                     </h2>
@@ -200,6 +206,7 @@ const App: React.FC = () => {
                     </p>
                   </div>
 
+                  {/* Dates */}
                   <div className="grid grid-cols-2 gap-4 py-4 border-y border-border/60">
                     <div className="space-y-1">
                       <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
@@ -219,6 +226,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Actions */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <motion.a
                       href={result.linkedin}
@@ -228,8 +236,7 @@ const App: React.FC = () => {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                     >
-                      <Linkedin className="w-4 h-4" />
-                      LinkedIn Profile
+                      <Linkedin className="w-4 h-4" /> LinkedIn Profile
                     </motion.a>
 
                     {result.endingDate &&
@@ -246,15 +253,16 @@ const App: React.FC = () => {
                 </div>
               </motion.div>
             )}
-          </AnimatePresence>
 
-          <AnimatePresence>
+            {/* Not Found */}
             {status === "not_found" && (
               <motion.div
-                className="flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-border rounded-3xl bg-card/30"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
+                key="not_found"
+                className="absolute inset-0 flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-border rounded-3xl bg-card/30"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
               >
                 <div className="bg-destructive/10 p-4 rounded-full mb-4">
                   <AlertCircle className="w-12 h-12 text-destructive" />
@@ -285,9 +293,10 @@ const App: React.FC = () => {
             )}
           </AnimatePresence>
 
+          {/* Idle */}
           {status === "idle" && (
             <motion.div
-              className="flex flex-col items-center justify-center text-center opacity-40"
+              className="flex flex-col items-center justify-center text-center absolute inset-0 opacity-40"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
