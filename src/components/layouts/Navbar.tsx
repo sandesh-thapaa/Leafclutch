@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { LuCircleUserRound } from "react-icons/lu";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,21 +15,30 @@ import {
 const careers = [
   { name: "Jobs", href: "/careers/jobs" },
   { name: "Internships", href: "/careers/internships" },
+  { name: "Training & Internship", href: "/careers/internships" },
 ];
 
 const others = [
-  { name: "Blog", href: "/blog" },
-  { name: "Verify Certificate", href: "/verify-certificate" },
-  { name: "Our Projects", href: "/our-projects" },
+  { name: "Blog", href: "/others/blog" },
+  { name: "Verify Certificate", href: "/others/verify-certificate" },
+  { name: "Our Projects", href: "/others/our-projects" },
+];
+const services = [
+  { name: "All Services", href: "/services/blog" },
+  { name: "Web Development", href: "/services/verify-certificate" },
+  { name: "Mobile App Development", href: "/services/our-projects" },
+  { name: "DevOps Solutions", href: "/services/our-projects" },
+  { name: "Cybersecurity", href: "/services/our-projects" },
+  { name: "Data Science & AI", href: "/services/our-projects" },
+  { name: "Digital Marketing", href: "/services/our-projects" },
 ];
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "About Us", href: "/about" },
+  { name: "Services", href: "/services", dropdown: services },
   { name: "Careers", href: "/careers", dropdown: careers },
   { name: "Others", href: "/others", dropdown: others },
-  { name: "Resources", href: "/resources" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -45,23 +57,16 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-lg">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/50 bg-card backdrop-blur-lg ">
       <div className="container-custom">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <span className="font-heading text-xl font-bold text-primary-foreground">
-                L
-              </span>
-            </div>
-            <span className="hidden font-heading text-xl font-bold text-foreground sm:block">
-              Leafclutch
-            </span>
+          <Link to="/">
+            <img src="/logo.png" alt="Leafclutch Logo" className="h-14" />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-4 lg:flex">
             {navLinks.map((link) =>
               link.dropdown ? (
                 <DropdownMenu key={link.name}>
@@ -108,27 +113,49 @@ export function Navbar() {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
               className="hidden sm:flex"
             >
-              {isDark ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
+              <AnimatePresence mode="wait" initial={false}>
+                {isDark ? (
+                  <motion.div
+                    key="sun"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Sun className="h-5 w-5" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="moon"
+                    initial={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Moon className="h-5 w-5" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </Button>
-
+            {/* <div className="p-10">
+              <LuCircleUserRound size={40} className="text-red-500" />
+            </div> */}
             <div className="hidden items-center gap-2 sm:flex">
-              <Button variant="ghost" asChild>
-                <Link to="/login">Login</Link>
-              </Button>
               <Button asChild>
-                <Link to="/register">Apply Now</Link>
+                <Link to="/login">
+                  <LuCircleUserRound className="!w-6 !h-6" /> Login
+                </Link>
               </Button>
+              {/* <Button asChild>
+                <Link to="/register">Apply Now</Link>
+              </Button> */}
             </div>
 
             {/* Mobile Menu Button */}

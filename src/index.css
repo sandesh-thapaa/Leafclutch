@@ -30,6 +30,10 @@
         --accent: 195 85% 45%;
         --accent-foreground: 0 0% 100%;
 
+        /* Mint */
+        --mint: 156, 75%, 56%;
+
+
         /* Success green */
         --success: 145 65% 42%;
         --success-foreground: 0 0% 100%;
@@ -202,12 +206,14 @@
 
     .nav-link::after {
         content: '';
-        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-mint transition-all duration-300;
     }
 
     .nav-link:hover::after {
         @apply w-full;
     }
+
+
 
     .input-focus {
         @apply focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200;

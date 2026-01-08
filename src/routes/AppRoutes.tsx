@@ -17,9 +17,12 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/careers/jobs" element={<Job />} />
           <Route path="/careers/internships" element={<Internship />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/verify-certificate" element={<VerifyCertificate />} />
-          <Route path="/our-projects" element={<OurProjects />} />
+          <Route path="/others/blog" element={<Blog />} />
+          <Route
+            path="/others/verify-certificate"
+            element={<VerifyCertificate />}
+          />
+          <Route path="/others/our-projects" element={<OurProjects />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

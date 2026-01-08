@@ -1,5 +1,15 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import {
+  Facebook,
+  Twitter,
+  Linkedin,
+  Instagram,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
+import { TbBrandTiktok } from "react-icons/tb";
 
 const services = [
   { name: "Web Development", href: "/services/web-development" },
@@ -30,28 +40,25 @@ const socials = [
   { icon: Linkedin, href: "#", label: "LinkedIn" },
   { icon: Instagram, href: "#", label: "Instagram" },
   { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: TbBrandTiktok, href: "#", label: "Tiktok" },
 ];
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
-      <div className="container-custom section-padding">
+      <div className="container-custom py-16 md:pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <span className="font-heading text-xl font-bold text-primary-foreground">L</span>
-              </div>
-              <span className="font-heading text-xl font-bold text-foreground">
-                Leafclutch Technologies
-              </span>
+            {/* Logo */}
+            <Link to="/">
+              <img src="/logo.png" alt="Leafclutch Logo" className="h-16" />
             </Link>
             <p className="mt-4 max-w-sm text-muted-foreground">
-              Empowering innovation through cutting-edge technology solutions, 
+              Empowering innovation through cutting-edge technology solutions,
               training, and digital transformation services.
             </p>
-            
+
             {/* Contact Info */}
             <div className="mt-6 space-y-3">
               <a
@@ -91,7 +98,9 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-base font-semibold text-foreground">Services</h3>
+            <h3 className="text-base font-semibold text-foreground">
+              Services
+            </h3>
             <ul className="mt-4 space-y-3">
               {services.map((link) => (
                 <li key={link.name}>
@@ -108,7 +117,9 @@ export function Footer() {
 
           {/* EdTech */}
           <div>
-            <h3 className="text-base font-semibold text-foreground">Training</h3>
+            <h3 className="text-base font-semibold text-foreground">
+              Training
+            </h3>
             <ul className="mt-4 space-y-3">
               {edtech.map((link) => (
                 <li key={link.name}>
@@ -144,13 +155,20 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Leafclutch Technologies. All rights reserved.
+            © {new Date().getFullYear()} Leafclutch Technologies. All rights
+            reserved.
           </p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary">
+            <Link
+              to="/privacy"
+              className="text-sm text-muted-foreground hover:text-primary"
+            >
               Privacy Policy
             </Link>
-            <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary">
+            <Link
+              to="/terms"
+              className="text-sm text-muted-foreground hover:text-primary"
+            >
               Terms of Service
             </Link>
           </div>
