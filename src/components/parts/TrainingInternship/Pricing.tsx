@@ -119,7 +119,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ categories }) => {
                 </p>
               </div>
 
-              Verified Tag
+              {/* Verified Tag */}
               <div className="hidden md:flex flex-col items-center justify-center pl-6 border-l border-gray-100 dark:border-gray-800">
                 <ShieldCheck className="w-6 h-6 text-mint mb-1" />
                 <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter">
