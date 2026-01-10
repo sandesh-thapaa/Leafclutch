@@ -5,12 +5,10 @@ import { LuCircleUserRound } from "react-icons/lu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
 
-
-
 const careers = [
   { name: "Jobs", href: "/careers/jobs" },
   { name: "Internships", href: "/careers/internships" },
-  { name: "Training & Internship", href: "/careers/internships" },
+  { name: "Training & Internship", href: "/careers/training" },
 ];
 
 const others = [
@@ -20,13 +18,13 @@ const others = [
 ];
 
 const services = [
-  { name: "All Services", href: "/services/blog" },
-  { name: "Web Development", href: "/services/verify-certificate" },
-  { name: "Mobile App Development", href: "/services/our-projects" },
-  { name: "DevOps Solutions", href: "/services/our-projects" },
-  { name: "Cybersecurity", href: "/services/our-projects" },
-  { name: "Data Science & AI", href: "/services/our-projects" },
-  { name: "Digital Marketing", href: "/services/our-projects" },
+  { name: "All Services", href: "/services/all-services" },
+  { name: "Web Development", href: "/services/web-development" },
+  { name: "Mobile App Development", href: "/services/mobile-development" },
+  { name: "DevOps Solutions", href: "/services/devops" },
+  { name: "Cybersecurity", href: "/services/cybersecurity" },
+  { name: "Data Science & AI", href: "/services/data-science" },
+  { name: "Digital Marketing", href: "/services/digital-marketing" },
 ];
 
 const navLinks = [
@@ -91,7 +89,7 @@ export function Navbar() {
 
                   {/* Dropdown menu */}
                   {openDropdown === link.name && (
-                    <div className="absolute left-0 w-56 bg-card rounded-md shadow-lg z-10">
+                    <div className="absolute left-0 w-56 bg-card rounded-md shadow-lg border border-gray-100 dark:border-gray-700 z-10">
                       {link.dropdown.map((item) => (
                         <Link
                           key={item.name}
@@ -125,7 +123,7 @@ export function Navbar() {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              className="pt-0.5 sm:flex"
+              className="pt-0.5 sm:flex p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all"
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isDark ? (
@@ -213,23 +211,29 @@ export function Navbar() {
                   return (
                     <div key={link.name}>
                       {/* Main link */}
-                      <button
-                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium active:scale-[0.98]"
-                        onClick={() =>
-                          link.dropdown
-                            ? setOpenDropdown(open ? null : link.name)
-                            : setMobileMenuOpen(false)
-                        }
-                      >
-                        <span>{link.name}</span>
-                        {link.dropdown && (
+                      {link.dropdown ? (
+                        <button
+                          className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium active:scale-[0.98]"
+                          onClick={() =>
+                            setOpenDropdown(open ? null : link.name)
+                          }
+                        >
+                          <span>{link.name}</span>
                           <ChevronDown
-                            className={`h-4 w-4 transition-transform ${
+                            className={`h-4 w-4 transition-transform duration-200 ${
                               open ? "rotate-180" : ""
                             }`}
                           />
-                        )}
-                      </button>
+                        </button>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className="flex w-full items-center rounded-md px-3 py-2 text-base font-medium active:scale-[0.98]"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {link.name}
+                        </Link>
+                      )}
 
                       {/* Dropdown links */}
                       {link.dropdown && open && (

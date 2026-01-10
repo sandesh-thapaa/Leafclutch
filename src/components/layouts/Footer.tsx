@@ -31,7 +31,7 @@ const company = [
   { name: "About Us", href: "/about" },
   { name: "Careers", href: "/about#careers" },
   { name: "Resources", href: "/resources" },
-  { name: "Contact", href: "/contact" },
+  { name: "Contact", href: "mailto:careers@leafclutchtech.com.np" },
 ];
 
 const socials = [
@@ -63,6 +63,8 @@ export function Footer() {
             <div className="mt-6 space-y-3">
               <a
                 href="mailto:info@leafclutch.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
                 <Mail className="h-4 w-4" />
@@ -73,11 +75,11 @@ export function Footer() {
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
                 <Phone className="h-4 w-4" />
-                +1 (234) 567-890
+                +977-9766715666
               </a>
               <p className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />
-                123 Tech Street, Innovation City
+                Bhairahawa, Lumbini
               </p>
             </div>
 
@@ -140,12 +142,23 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {company.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.href.startsWith("mailto:") ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
