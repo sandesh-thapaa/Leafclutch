@@ -1,5 +1,5 @@
 import React from "react";
-import { Cpu, Code2 } from "lucide-react";
+import { Code2 } from "lucide-react";
 
 interface TechnologiesProps {
   technologies: string[];
