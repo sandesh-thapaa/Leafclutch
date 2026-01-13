@@ -50,7 +50,7 @@ const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* Epic Heading */}
-          <h1 className="text-4xl md:text-6xl font-black mb-[5rem] leading-tight drop-shadow-lg tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black mb-[5rem] leading-tight drop-shadow-lg tracking-normal">
             {title}
           </h1>
 
@@ -62,7 +62,7 @@ const Hero: React.FC<HeroProps> = ({
           {/* High-Impact CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link to="/others/contact">
-              <button className="relative group w-full sm:w-auto px-10 py-4 bg-mint text-primary dark:text-blue-950 font-black rounded-2xl transition-all shadow-[0_0_30px_rgba(92,242,177,0.4)] hover:shadow-[0_0_50px_rgba(92,242,177,0.6)] flex items-center justify-center overflow-hidden">
+              <button className="relative group w-full sm:w-auto px-10 py-4 bg-mint text-primary dark:text-blue-950 font-black rounded-2xl transition-all flex items-center justify-center overflow-hidden">
                 <span className="relative z-10 flex items-center">
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

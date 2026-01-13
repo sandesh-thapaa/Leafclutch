@@ -28,7 +28,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ categories }) => {
     }, 50); // wait for DOM
 
     return () => clearTimeout(timeout);
-  }, [location.hash]);
+  }, [location.key, location.hash]);
 
   return (
     <section className="py-24 bg-gray-50 dark:bg-gray-900">
@@ -80,7 +80,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ categories }) => {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-mint/10 dark:bg-mint/5 border border-mint/20 rounded-2xl">
+                  <div className="p-4 bg-mint/10 dark:bg-mint/5 border border-primary rounded-2xl">
                     <div className="flex items-center space-x-2 text-mint">
                       <Tag className="w-4 h-4" />
                       <span className="text-sm font-black italic">

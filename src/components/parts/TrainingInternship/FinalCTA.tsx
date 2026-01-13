@@ -46,7 +46,7 @@ const FinalCTA: React.FC = () => {
               <Phone className="w-4 h-4" />
             </div>
             <div className="overflow-hidden flex flex-col">
-              <h3 className="text-xs font-black text-white uppercase tracking-widest mb-0.5 truncate">
+              <h3 className="text-sm font-black text-white uppercase tracking-widest mb-0.5 truncate">
                 Siddhartha Pathak
               </h3>
               <p className="text-white/40 font-black text-sm tracking-[0.05rem] self-start">
@@ -64,18 +64,18 @@ const FinalCTA: React.FC = () => {
               <Phone className="w-4 h-4" />
             </div>
             <div className="overflow-hiddenf flex flex-col">
-              <h3 className="text-xs font-black text-white uppercase tracking-widest mb-0.5 truncate">
+              <h3 className="text-sm font-black text-white uppercase tracking-widest mb-0.5 truncate">
                 Shubham Kr. Deo
               </h3>
               <p className="text-white/40 font-black text-sm tracking-[0.05rem] self-start">
-                +977-9867420560
+                +977-9766715666
               </p>
             </div>
           </a>
 
           {/* Box 1: Simple WhatsApp Action */}
           <a
-            href="https://wa.me/9766722920?text=I%20want%20to%20apply"
+            href="https://wa.me/9766715768?text=I%20want%20to%20apply"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative block cursor-pointer"

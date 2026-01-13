@@ -105,6 +105,7 @@ const jobs: JobOption[] = [
 ];
 
 const emailRecipient = "careers@leafclutchtech.com.np";
+const SHOW_JOBS = false;
 
 export const JobList: React.FC = () => {
   return (
@@ -122,9 +123,11 @@ export const JobList: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
-          {jobs.map((job, index) => {
-            const body = `Hello,
+        {/* commented code */}
+        {SHOW_JOBS && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+            {jobs.map((job, index) => {
+              const body = `Hello,
 
 I would like to apply for the ${job.title} position. Here is my information:
 
@@ -136,90 +139,102 @@ Resume: [Please attach your resume file]
 Thank you.
 `;
 
-            const mailtoLink = `mailto:${emailRecipient}?subject=Job Application: ${encodeURIComponent(
-              job.title
-            )}&body=${encodeURIComponent(body)}`;
-            return (
-              <div
-                key={index}
-                className="max-w-2xl w-full bg-card rounded-[2rem] border-2 border-border shadow-sm overflow-hidden flex flex-col relative group transition-all duration-300 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2"
-              >
-                {/* Main Content Padding */}
-                <div className="p-8 pb-4">
-                  {/* Header Section */}
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                      {job.title}
-                    </h2>
-                    <div className="flex items-center gap-2 text-accent font-bold tracking-widest text-xs">
-                      <Building2 size={16} />
-                      <span className="uppercase">{job.department}</span>
+              const mailtoLink = `mailto:${emailRecipient}?subject=Job Application: ${encodeURIComponent(
+                job.title
+              )}&body=${encodeURIComponent(body)}`;
+              return (
+                <div
+                  key={index}
+                  className="max-w-2xl w-full bg-card rounded-[2rem] border-2 border-border shadow-sm overflow-hidden flex flex-col relative group transition-all duration-300 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2"
+                >
+                  {/* Main Content Padding */}
+                  <div className="p-8 pb-4">
+                    {/* Header Section */}
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                        {job.title}
+                      </h2>
+                      <div className="flex items-center gap-2 text-accent font-bold tracking-widest text-xs">
+                        <Building2 size={16} />
+                        <span className="uppercase">{job.department}</span>
+                      </div>
+                    </div>
+
+                    {/* Metadata Grid */}
+                    <div className="grid grid-cols-2 gap-y-4 mb-8">
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Briefcase size={18} />
+                        <span className="text-sm font-medium">
+                          {job.type} • {job.experience}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <MapPin size={18} />
+                        <span className="text-sm font-medium">
+                          {job.location}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-card-foreground font-bold col-span-2">
+                        <DollarSign size={18} className="text-primary" />
+                        <span className="text-lg text-primary">
+                          {job.salary}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Requirements Section */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold text-card-foreground">
+                        Key Requirements
+                      </h3>
+                      <ul className="space-y-3">
+                        {job.requirements.map((req, index) => (
+                          <li
+                            key={index}
+                            className="flex items-start gap-3 group/item"
+                          >
+                            <div className="mt-0.5 text-accent shrink-0">
+                              <CheckCircle2
+                                size={20}
+                                fill="currentColor"
+                                className="text-card fill-accent"
+                              />
+                            </div>
+                            <span className="text-card-foreground/80 font-medium leading-tight">
+                              {req}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
 
-                  {/* Metadata Grid */}
-                  <div className="grid grid-cols-2 gap-y-4 mb-8">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Briefcase size={18} />
-                      <span className="text-sm font-medium">
-                        {job.type} • {job.experience}
-                      </span>
+                  {/* Apply Button Footer */}
+                  <a
+                    href={mailtoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="mt-4 px-4 pb-4 flex justify-center translate-y-2">
+                      <button className="w-[90%] bg-primary text-primary-foreground font-bold py-4 px-8 rounded-2xl shadow-lg hover:opacity-90 transition-all duration-200 active:scale-[0.98] flex items-center justify-center">
+                        Apply Now
+                      </button>
                     </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <MapPin size={18} />
-                      <span className="text-sm font-medium">
-                        {job.location}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-card-foreground font-bold col-span-2">
-                      <DollarSign size={18} className="text-primary" />
-                      <span className="text-lg text-primary">{job.salary}</span>
-                    </div>
-                  </div>
+                  </a>
 
-                  {/* Requirements Section */}
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-card-foreground">
-                      Key Requirements
-                    </h3>
-                    <ul className="space-y-3">
-                      {job.requirements.map((req, index) => (
-                        <li
-                          key={index}
-                          className="flex items-start gap-3 group/item"
-                        >
-                          <div className="mt-0.5 text-accent shrink-0">
-                            <CheckCircle2
-                              size={20}
-                              fill="currentColor"
-                              className="text-card fill-accent"
-                            />
-                          </div>
-                          <span className="text-card-foreground/80 font-medium leading-tight">
-                            {req}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {/* Small base padding */}
+                  <div className="h-4" />
                 </div>
+              );
+            })}
+          </div>
+        )}
 
-                {/* Apply Button Footer */}
-                <a href={mailtoLink} target="_blank" rel="noopener noreferrer">
-                  <div className="mt-4 px-4 pb-4 flex justify-center translate-y-2">
-                    <button className="w-[90%] bg-primary text-primary-foreground font-bold py-4 px-8 rounded-2xl shadow-lg hover:opacity-90 transition-all duration-200 active:scale-[0.98] flex items-center justify-center">
-                      Apply Now
-                    </button>
-                  </div>
-                </a>
-
-                {/* Small base padding */}
-                <div className="h-4" />
-              </div>
-            );
-          })}
+        <div className="mt-8 p-8 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-primary max-w-3xl mx-auto text-center">
+          <p className="text-[2rem] text-gray-500 dark:text-gray-400 italic">
+            "We're currently not hiring."
+          </p>
         </div>
-
         {/* <div className="mt-16 text-center">
           <p className="text-muted-foreground">
             Don't see a perfect fit?{" "}

@@ -1,7 +1,7 @@
 import { Award, Briefcase, Code2, Rocket, UserCheck } from "lucide-react";
 
 export const service = {
-  title: "Courses + Internship Program",
+  title: "Courses & Internship Program",
   subtitle: "Build Skills. Gain Experience. Get Industry-Ready.",
   description:
     "A structured pathway from learning to professional experience. Join Leafclutch Technologies to master industry-relevant skills and secure your future.",
@@ -65,7 +65,7 @@ export const service = {
     },
     {
       title: "Internship Promotion",
-      duration: "After Month 1",
+      duration: "Remaining 2 months",
       description:
         "Get promoted to an Internship based on your skills, performance, and consistency.",
     },

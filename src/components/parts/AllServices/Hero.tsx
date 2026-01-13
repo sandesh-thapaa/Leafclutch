@@ -38,7 +38,8 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight max-w-4xl mx-auto tracking-tight"
         >
-          Comprehensive <br className="hidden md:block" /> Technology Solutions
+          Comprehensive <br className="hidden md:block" />
+          Technology Solutions
         </motion.h1>
 
         <motion.p

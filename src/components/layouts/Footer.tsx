@@ -41,7 +41,7 @@ const socials = [
     href: "https://www.facebook.com/profile.php?id=61584902195796",
     label: "Facebook",
   },
-  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Twitter, href: "https://x.com/", label: "Twitter" },
   {
     icon: Linkedin,
     href: "https://www.linkedin.com/company/leafclutch-technologies/",
@@ -57,7 +57,7 @@ const socials = [
     href: "https://www.youtube.com/@LeafclutchTechnologies",
     label: "YouTube",
   },
-  { icon: TbBrandTiktok, href: "#", label: "Tiktok" },
+  { icon: TbBrandTiktok, href: "https://www.tiktok.com/en/", label: "Tiktok" },
   {
     icon: TbBrandDiscord,
     href: "https://discord.gg/4aDwcMZBPq",
@@ -133,6 +133,9 @@ export function Footer() {
                   <Link
                     to={link.href}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
                   >
                     {link.name}
                   </Link>
@@ -152,6 +155,7 @@ export function Footer() {
                   <Link
                     to={link.href}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    // onClick={() => {}}
                   >
                     {link.name}
                   </Link>
@@ -179,6 +183,9 @@ export function Footer() {
                     <Link
                       to={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                     >
                       {link.name}
                     </Link>

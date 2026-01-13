@@ -20,7 +20,8 @@ export const SERVICES_DATA = [
       "Custom websites and web applications built with modern technologies like React, Next.js, and Node.js.",
     icon: (
       <Gifs
-        src="https://aviintech.com/wp-content/uploads/2023/10/training.gif"
+        // src="https://aviintech.com/wp-content/uploads/2023/10/training.gif"
+        src="https://lottie.host/2ce4fd10-cf6e-472c-84f0-d7ed4221a19c/wPbVH9oZ8u.lottie"
         alt=""
         className="h-[12rem] w-full "
       />
@@ -39,7 +40,8 @@ export const SERVICES_DATA = [
       "Native and cross-platform mobile apps for iOS and Android using React Native and Flutter.",
     icon: (
       <Gifs
-        src="https://cdn.dribbble.com/userupload/24343475/file/original-93eccd85db71370c542e86f05641dcea.gif"
+        // src="https://cdn.dribbble.com/userupload/24343475/file/original-93eccd85db71370c542e86f05641dcea.gif"
+        src="https://lottie.host/49dbf432-a55a-4721-bd96-4b660dedbb0e/ufJQbyW1ci.lottie"
         alt=""
         className="h-[12rem] w-full "
       />
@@ -53,7 +55,8 @@ export const SERVICES_DATA = [
       "Streamline your development with CI/CD pipelines, cloud infrastructure, and automation.",
     icon: (
       <Gifs
-        src="https://camo.githubusercontent.com/3612102bd88e633329d16eb56f104fc28acb672b0ee077a643c6072420e15db1/68747470733a2f2f6c697665696d616765732e616c676f776f726b732e636f6d2f6e65772d616c676f776f726b732f77702d636f6e74656e742f75706c6f6164732f323032322f30362f32383136313932352f4465764f70732d6d696e2e676966"
+        // src="https://camo.githubusercontent.com/3612102bd88e633329d16eb56f104fc28acb672b0ee077a643c6072420e15db1/68747470733a2f2f6c697665696d616765732e616c676f776f726b732e636f6d2f6e65772d616c676f776f726b732f77702d636f6e74656e742f75706c6f6164732f323032322f30362f32383136313932352f4465764f70732d6d696e2e676966"
+        src="https://lottie.host/d9d80db0-2de5-4883-ad60-9187c7fd57f1/DoraQiPibU.lottie"
         alt=""
         className="h-[12rem] w-full "
       />
@@ -72,7 +75,9 @@ export const SERVICES_DATA = [
       "Protect your business with comprehensive security audits, penetration testing, and compliance.",
     icon: (
       <Gifs
-        src="https://cdn.dribbble.com/userupload/28350278/file/original-a51de8316c9957ccea1ae498be54a9e1.gif"
+        // src="https://cdn.dribbble.com/userupload/28350278/file/original-a51de8316c9957ccea1ae498be54a9e1.gif"
+        // src="https://lottie.host/7c0b08ea-baa8-486f-8e9c-c460f5519163/gY1cltP1y4.lottie"
+        src="https://lottie.host/75c8b880-479b-4eb2-ab86-b6eeb1ca045d/VMO59MdVIj.lottie"
         alt=""
         className="h-[12rem] w-full "
       />
@@ -91,7 +96,8 @@ export const SERVICES_DATA = [
       "Transform data into actionable insights with machine learning, analytics and automation.",
     icon: (
       <Gifs
-        src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*XgwJgF0EcYUShkNjqz8NeA.gif"
+        // src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*XgwJgF0EcYUShkNjqz8NeA.gif"
+        src="https://lottie.host/dcef0e14-4941-41f4-81b2-efc5401e646f/vwF0QOlEn6.lottie"
         alt=""
         className="h-[12rem] w-full "
       />
@@ -105,7 +111,9 @@ export const SERVICES_DATA = [
       "Grow your online presence with SEO, social media marketing, and paid advertising.",
     icon: (
       <Gifs
-        src="https://images.squarespace-cdn.com/content/v1/5e59eefe0e4624584d852c64/de039f25-73da-4743-8bb5-ee01a9ccd244/giphy.gif?format=2500w"
+        // src="https://images.squarespace-cdn.com/content/v1/5e59eefe0e4624584d852c64/de039f25-73da-4743-8bb5-ee01a9ccd244/giphy.gif?format=2500w"
+        // src="https://lottie.host/73fce23a-0a3a-4107-aaf7-53f5d5f7bef1/OaGipfpxkq.lottie"
+        src="https://lottie.host/ad0b5708-d705-4737-9622-2f144060ede9/wKfV30hrDN.lottie"
         alt=""
         className="h-[12rem] w-full"
       />
