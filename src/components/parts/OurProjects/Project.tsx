@@ -61,10 +61,10 @@ const Projects = () => {
   return (
     <>
       {/* Hero Section */}
-    <Hero/>
+      <Hero />
 
       {/* Projects Section */}
-      <section className="section-padding bg-background">
+      <section className="section-padding px-2 bg-background">
         <div className="container-padding mx-auto max-w-7xl">
           <div className="space-y-12">
             {projects.map((project, index) => (

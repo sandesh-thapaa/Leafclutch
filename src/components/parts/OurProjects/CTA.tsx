@@ -13,7 +13,7 @@ export const CTA: React.FC = () => {
           Let's discuss how we can help bring your vision to life.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex sm:flex-row gap-4 justify-center">
           <Link to="/others/contact">
             <button className="flex items-center justify-center gap-2 bg-card text-primary px-10 py-4 rounded-xl font-bold text-lg hover:bg-background transition-colors shadow-lg">
               Get Started

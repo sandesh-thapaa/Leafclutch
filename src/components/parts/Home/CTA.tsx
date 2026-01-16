@@ -80,7 +80,7 @@ const CTA: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <div className="p-6 bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/10 flex items-center space-x-5 shadow-2xl group hover:bg-white/10 transition-all cursor-pointer w-full md:w-auto">
+            <div className="p-5 bg-white/5 backdrop-blur-xl rounded-[1rem] border border-white/10 flex items-center space-x-5 shadow-2xl group hover:bg-white/10 transition-all cursor-pointer w-full md:w-auto">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-400 rounded-2xl flex items-center justify-center text-[#0A192F] group-hover:rotate-12 transition-transform">
                 <Mail className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
