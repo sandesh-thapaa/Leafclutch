@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { Menu, X, ChevronDown, 
+  // Sun, Moon
+ } from "lucide-react";
 import { LuCircleUserRound } from "react-icons/lu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
@@ -134,7 +136,7 @@ export function Navbar() {
 
           {/* Right section */}
           <div className="flex items-center gap-2 md:gap-10">
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
@@ -163,7 +165,7 @@ export function Navbar() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </Button>
+            </Button> */}
             <div className="hidden lg:flex">
               {/* <Button asChild>
                 <Link to="/login">
