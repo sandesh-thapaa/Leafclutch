@@ -193,7 +193,7 @@ const PricingSection: React.FC = () => {
             </div>
             <div>
               <p className="text-base md:text-xl font-bold text-gray-700 dark:text-gray-200">
-                Remaining fee payable in{" "}
+                Remaining fee payable in
                 <span className="text-accent dark:text-mint font-black italic">
                   5 easy installments
                 </span>
