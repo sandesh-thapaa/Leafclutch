@@ -1,84 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Users, DollarSign } from "lucide-react";
 import { Button } from "../../ui/button";
-
-interface InternshipOption {
-  title: string;
-  duration: string;
-  audience: string;
-  stipend: string;
-}
-
-const options: InternshipOption[] = [
-  {
-    title: "Frontend Development Intern",
-    duration: "3 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-  {
-    title: "Backend Development Intern",
-    duration: "3 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-  {
-    title: "Data Science Intern",
-    duration: "6 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-  {
-    title: "DevOps Intern",
-    duration: "3 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-  {
-    title: "Digital Marketing Intern",
-    duration: "3 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-  {
-    title: "UI/UX Design Intern",
-    duration: "3 months",
-    audience: "Students & Freshers",
-    stipend: "Stipend Provided",
-  },
-];
-
-const internships = [
-  {
-    title: "Graphic Designer Internship",
-    duration: "3-6 months",
-    type: "Unpaid and Remote",
-    description:
-      "Work on real-world projects, learn best practices, and contribute to our visual branding across various channels.",
-    skills: [
-      "Canva",
-      "Adobe Creative Suite",
-      "Typography",
-      "Layout Principles",
-    ],
-  },
-  {
-    title: "UI/UX Designer Internship",
-    duration: "3-6 months",
-    type: "Unpaid and Remote",
-    description:
-      "Collaborate to design intuitive and user-friendly interfaces in Figma.",
-    skills: ["Figma", "UX Principles", "Prototyping"],
-  },
-];
+import { 
+  opportunityApi, 
+  type OpportunityResponse 
+} from "../../../services/opportunityService";
 
 const emailRecipient = "careers@leafclutchtech.com.np";
-const SHOW_INTERNSHIP_LIST = false;
-
-// const GOOGLE_FORM_URL = "https://forms.gle/4YBqdUdRyrpTx5EF8";
+const SHOW_INTERNSHIP_LIST = false; 
 
 export const InternshipList: React.FC = () => {
+  const [internships, setInternships] = useState<OpportunityResponse[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInternships = async () => {
+      try {
+        setLoading(true);
+        const data = await opportunityApi.getAll();
+        const filtered = data.filter((opp) => opp.type === "INTERNSHIP");
+        setInternships(filtered);
+      } catch (err) {
+        console.error("Failed to load internships:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInternships();
+  }, []);
+
+  // Helper to format duration text properly
+  const formatDuration = (months?: number) => {
+    if (!months || months <= 0) return "Flexible Duration";
+    return `${months} ${months === 1 ? "Month" : "Months"}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="py-24 text-center font-bold animate-pulse text-primary">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <section className="py-24 bg-muted/50 px-4">
       <div className="max-w-7xl mx-auto">
@@ -95,57 +60,31 @@ export const InternshipList: React.FC = () => {
         </div>
 
         {SHOW_INTERNSHIP_LIST && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {options.map((option, index) => {
-              // Pre-fill the email body
-              const body = `Hello,
-
-I would like to apply for the ${option.title} position. Here is my information:
-
-Name: [Your Name]
-LinkedIn: [Your LinkedIn]
-GitHub: [Your GitHub]
-Resume: Please attach your resume file.
-
-Thank you.
-`;
-
-              const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(
-                `Internship Application: ${option.title}`
-              )}&body=${encodeURIComponent(body)}`;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {internships.map((job) => {
+              const body = `Hello,\n\nI would like to apply for the ${job.title} position...`;
+              const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(`Application: ${job.title}`)}&body=${encodeURIComponent(body)}`;
 
               return (
-                <div
-                  key={index}
-                  className="bg-card p-8 rounded-3xl border border-border shadow-sm flex flex-col hover:border-primary/50 transition-colors"
-                >
-                  <h3 className="text-xl font-bold text-card-foreground mb-6">
-                    {option.title}
-                  </h3>
-
+                <div key={job.id} className="bg-card p-8 rounded-3xl border border-border shadow-sm flex flex-col hover:border-primary/50 transition-colors">
+                  <h3 className="text-xl font-bold text-card-foreground mb-6">{job.title}</h3>
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <Clock className="w-5 h-5" />
                       <span className="text-sm font-medium">
-                        {option.duration}
+                        {formatDuration(job.internship_details?.duration_months)}
                       </span>
                     </div>
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <Users className="w-5 h-5" />
-                      <span className="text-sm font-medium">
-                        {option.audience}
-                      </span>
+                      <span className="text-sm font-medium">{job.location}</span>
                     </div>
                     <div className="flex items-center gap-3 text-primary font-semibold">
                       <DollarSign className="w-5 h-5" />
-                      <span className="text-sm">{option.stipend}</span>
+                      <span className="text-sm">{job.internship_details?.stipend}</span>
                     </div>
                   </div>
-                  <a
-                    href={mailtoLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={mailtoLink} target="_blank" rel="noopener noreferrer">
                     <button className="w-full py-3 rounded-xl border border-border text-foreground font-bold hover:bg-muted transition-colors mt-auto">
                       Apply Now
                     </button>
@@ -158,25 +97,12 @@ Thank you.
 
         <div className="space-y-6">
           {internships.map((job, i) => {
-            const body = `Hello,
-
-I would like to apply for the ${job.title} position. Here is my information:
-
-Name: [Your Name]
-LinkedIn: [Your LinkedIn]
-GitHub: [Your GitHub]
-Resume: Please attach your resume file.
-
-Thank you.
-`;
-
-            const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(
-              `Internship Application: ${job.title}`
-            )}&body=${encodeURIComponent(body)}`;
+            const body = `Hello,\n\nI would like to apply for the ${job.title} position. Here is my information:\n\nName: [Your Name]\nLinkedIn: [Your LinkedIn]\nGitHub: [Your GitHub]\nResume: Please attach your resume file.\n\nThank you.`;
+            const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(`Internship Application: ${job.title}`)}&body=${encodeURIComponent(body)}`;
 
             return (
               <motion.div
-                key={i}
+                key={job.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -188,10 +114,11 @@ Thank you.
                     <h3 className="text-xl font-bold text-primary">
                       {job.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {job.duration} •{" "}
-                      <span className="text-accent">{job.type}</span>
-                    </p>
+                    <div className="text-sm text-muted-foreground">
+                      <span>{formatDuration(job.internship_details?.duration_months)}</span>
+                      <span className="mx-2">•</span>
+                      <span className="text-accent">{job.location}</span>
+                    </div>
                   </div>
                   <Button asChild>
                     <a href={mailtoLink} target="_blank" rel="noreferrer">
@@ -201,12 +128,12 @@ Thank you.
                 </div>
                 <p className="text-muted-foreground mb-4">{job.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {job.skills.map((skill) => (
+                  {job.requirements?.map((req) => (
                     <span
-                      key={skill}
+                      key={req}
                       className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground border"
                     >
-                      {skill}
+                      {req}
                     </span>
                   ))}
                 </div>
@@ -214,11 +141,6 @@ Thank you.
             );
           })}
         </div>
-        {/* <div className="mt-8 p-8 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-primary max-w-3xl mx-auto text-center">
-          <p className="text-[2rem] text-gray-500 dark:text-gray-400 italic">
-            "Only two internships are available for now."
-          </p>
-        </div> */}
       </div>
     </section>
   );

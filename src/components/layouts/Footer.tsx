@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Facebook,
@@ -10,23 +11,12 @@ import {
   MapPin,
 } from "lucide-react";
 import { TbBrandTiktok, TbBrandDiscord } from "react-icons/tb";
+import { serviceApi } from "../../services/serviceService";
+import { trainingApi } from "../../services/trainingService";
 
-const services = [
-  { name: "Web Development", href: "/services/web-development" },
-  { name: "Mobile Apps", href: "/services/mobile-development" },
-  { name: "DevOps", href: "/services/devops" },
-  { name: "Cybersecurity", href: "/services/cybersecurity" },
-  { name: "Data Science", href: "/services/data-science" },
-  { name: "Digital Marketing", href: "/services/digital-marketing" },
-  { name: "Training & Internship", href: "/training" },
-];
-
-const training = [
-  { name: "Core Tech & Design", href: "/training#core-tech-and-design" },
-  { name: "Data & AI Programs", href: "/training#data-and-ai-programs" },
-  { name: "DSA Program", href: "/training/#dsa-program" },
-  { name: "Programming Languages", href: "/training/#programming-languages" },
-];
+// Inferring types directly from your existing responses
+type ServiceItem = Awaited<ReturnType<typeof serviceApi.getAll>>[number];
+type TrainingItem = Awaited<ReturnType<typeof trainingApi.getAll>>[number];
 
 const company = [
   { name: "About Us", href: "/about" },
@@ -57,7 +47,11 @@ const socials = [
     href: "https://www.youtube.com/@LeafclutchTechnologies",
     label: "YouTube",
   },
-  { icon: TbBrandTiktok, href: "https://www.tiktok.com/@leafclutchtechnologies1?is_from_webapp=1&sender_device=pc", label: "Tiktok" },
+  {
+    icon: TbBrandTiktok,
+    href: "https://www.tiktok.com/@leafclutchtechnologies1",
+    label: "Tiktok",
+  },
   {
     icon: TbBrandDiscord,
     href: "https://discord.gg/4aDwcMZBPq",
@@ -66,13 +60,31 @@ const socials = [
 ];
 
 export function Footer() {
+  const [dynamicServices, setDynamicServices] = useState<ServiceItem[]>([]);
+  const [dynamicTrainings, setDynamicTrainings] = useState<TrainingItem[]>([]);
+
+  useEffect(() => {
+    const fetchFooterContent = async () => {
+      try {
+        const [sRes, tRes] = await Promise.all([
+          serviceApi.getAll(),
+          trainingApi.getAll(),
+        ]);
+        setDynamicServices(sRes || []);
+        setDynamicTrainings(tRes || []);
+      } catch (err) {
+        console.error("Footer fetch error:", err);
+      }
+    };
+    fetchFooterContent();
+  }, []);
+
   return (
     <footer className="border-t border-border bg-card">
-      <div className="container-custom py-16 md:pb-10  ">
+      <div className="container-custom py-16 md:pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand */}
+          {/* Brand Column */}
           <div className="lg:col-span-2">
-            {/* Logo */}
             <Link to="/">
               <img src="/logo.png" alt="Leafclutch Logo" className="h-16" />
             </Link>
@@ -80,32 +92,23 @@ export function Footer() {
               Empowering innovation through cutting-edge technology solutions,
               training, and digital transformation services.
             </p>
-
-            {/* Contact Info */}
             <div className="mt-6 space-y-3">
               <a
-                href="mailto:info@leafclutch.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:info@leafclutchtech.com.np"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
-                <Mail className="h-4 w-4" />
-                info@leafclutchtech.com.np
+                <Mail className="h-4 w-4" /> info@leafclutchtech.com.np
               </a>
               <a
                 href="tel:+9779766715768"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
-                <Phone className="h-4 w-4" />
-                +977-9766715768
+                <Phone className="h-4 w-4" /> +977-9766715768
               </a>
               <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                Siddharthanagar, Rupandehi
+                <MapPin className="h-4 w-4" /> Siddharthanagar, Rupandehi
               </p>
             </div>
-
-            {/* Social Links */}
             <div className="mt-6 flex gap-3">
               {socials.map((social) => (
                 <a
@@ -113,7 +116,6 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={social.label}
                   className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
                 >
                   <social.icon className="h-5 w-5" />
@@ -122,49 +124,48 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Services Column */}
           <div>
             <h3 className="text-base font-semibold text-foreground">
               Services
             </h3>
             <ul className="mt-4 space-y-3">
-              {services.map((link) => (
-                <li key={link.name}>
+              {dynamicServices.map((item) => (
+                <li key={item.id}>
                   <Link
-                    to={link.href}
+                    to={`/services/${item.id}`} // Removed .slug to fix TS error
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                    onClick={() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
                   >
-                    {link.name}
+                    {item.title}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* training */}
+          {/* Training Column */}
           <div>
             <h3 className="text-base font-semibold text-foreground">
               Training & Internship
             </h3>
             <ul className="mt-4 space-y-3">
-              {training.map((link) => (
-                <li key={link.name}>
+              {dynamicTrainings.map((item) => (
+                <li key={item.id}>
                   <Link
-                    to={link.href}
+                    to={`/training#${item.id}`}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                    // onClick={() => {}}
                   >
-                    {link.name}
+                    {item.title}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company Column */}
           <div>
             <h3 className="text-base font-semibold text-foreground">Company</h3>
             <ul className="mt-4 space-y-3">
@@ -173,8 +174,6 @@ export function Footer() {
                   {link.href.startsWith("mailto:") ? (
                     <a
                       href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.name}
@@ -183,9 +182,9 @@ export function Footer() {
                     <Link
                       to={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                      onClick={() => {
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
                     >
                       {link.name}
                     </Link>

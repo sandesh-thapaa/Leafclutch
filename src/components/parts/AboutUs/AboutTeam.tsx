@@ -1,68 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Linkedin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, easeOut } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { memberApi, type MemberResponse } from "../../../services/memberService";
 
-const teamMembers = [
-  {
-    name: "Pawan Chaudhary",
-    role: "Technical & DevOps Head",
-    linkedin: "https://www.linkedin.com/in/pawan-cdhry/",
-    image: "https://i.postimg.cc/jdb4dkYK/pawan.jpg",
-  },
-  {
-    name: "Shristi karki",
-    role: "Social Media and Technical",
-    linkedin: "https://www.linkedin.com/in/shristi-karki-388122391/",
-    image: "https://i.postimg.cc/Kv2DvshM/shristi.png",
-  },
-  {
-    name: "Bijay koirala",
-    role: "consultant",
-    linkedin: "https://www.linkedin.com/in/bijay-koirala-a98a0a260/",
-    image: "https://i.postimg.cc/6q7L2D5y/bijay.jpg",
-  },
-  {
-    name: "Siddhartha Pathak",
-    role: "Data Science & AI",
-    linkedin: "https://linkedin.com/in/siddharthapathak",
-    image: "https://i.postimg.cc/jdb4dkY2/siddhartha.jpg",
-  },
-  // {
-  //   name: "Saurya Chaudhary",
-  //   role: "Cyber security specialist",
-  //   linkedin: "https://www.linkedin.com/in/saurya-chaudhary-ab680b243/",
-  //   image: "https://i.postimg.cc/c4SB45G6/saurya.jpg",
-  // },
-  {
-    name: "Roshan Kumar Singh",
-    role: "Backend & AI",
-    linkedin: "https://www.linkedin.com/in/roshan-kumar-singh-60b68a253/",
-    image: "https://i.postimg.cc/xjgPs3zD/roshan.jpg",
-  },
-  // {
-  //   name: "Ayush Kumar Thakur",
-  //   role: "MERN Stack",
-  //   linkedin: "https://www.linkedin.com/in/ayush-kumar-thakur/",
-  //   image: "https://i.postimg.cc/xT7WSrsY/Ayush-Thakur.jpg",
-  // },
-  // {
-  //   name: "Aniket shah",
-  //   role: "MERN Stack",
-  //   linkedin: "https://www.linkedin.com/in/aniket-sah/",
-  //   image: "https://i.postimg.cc/433LKBFN/aniket-shah.jpg",
-  // },
-  {
-    name: "Shibika Nepal",
-    role: "HR",
-    linkedin: "https://www.linkedin.com/in/shibika-nepal-a66a46345/",
-    image:
-      "https://media.licdn.com/dms/image/v2/D5603AQHpyegYqRXyfw/profile-displayphoto-shrink_400_400/B56Zd5mZZsHQAs-/0/1750091800508?e=1770249600&v=beta&t=UcV6GjdTtavT-84gmOReihM3OUIKN9J9h0waYBjC-xI",
-  },
-];
-
-// Fade-in variants
+// Fade-in variants - Keeping your exact animations
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
@@ -74,6 +17,33 @@ const staggerContainer: Variants = {
 };
 
 const AboutTeam: React.FC = () => {
+  const [members, setMembers] = useState<MemberResponse[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        setLoading(true);
+        const data = await memberApi.getTeams();
+        // Only show members marked as visible on the backend
+        setMembers(data.filter(m => m.is_visible));
+      } catch (err) {
+        console.error("Failed to load team members:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTeam();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-24 text-center font-bold animate-pulse text-primary uppercase tracking-widest">
+        Loading Team...
+      </div>
+    );
+  }
+
   return (
     <section className="section-padding max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-16">
       <motion.h2
@@ -93,39 +63,48 @@ const AboutTeam: React.FC = () => {
         viewport={{ once: true, amount: 0 }}
         variants={staggerContainer}
       >
-        {teamMembers.map((member, idx) => (
-          <motion.div
-            key={idx}
-            className="space-y-4 text-center group"
-            variants={fadeIn}
-          >
-            <div className="w-[90%] aspect-square mx-auto overflow-hidden rounded-3xl border-2 border-transparent group-hover:border-accent transition-all shadow-md bg-muted">
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-1 px-1">
-              <h4 className="font-bold text-[1.5rem] leading-tight text-primary dark:text-white">
-                {member.name}
-              </h4>
-              <p className="text-[0.9rem] text-muted-foreground uppercase tracking-[0.1em] font-bold">
-                {member.role}
-              </p>
-              <div className="pt-2">
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-accent text-[0.8rem] font-black uppercase tracking-widest hover:underline decoration-2 underline-offset-4"
-                >
-                  <Linkedin className="w-3.5 h-3.5 mr-1.5" /> LinkedIn
-                </a>
+        {members.map((member) => {
+          // Extract LinkedIn from the social_media object dynamically
+          const linkedinUrl = member.social_media?.linkedin || 
+                            member.social_media?.LinkedIn || 
+                            Object.values(member.social_media)[0];
+
+          return (
+            <motion.div
+              key={member.id}
+              className="space-y-4 text-center group"
+              variants={fadeIn}
+            >
+              <div className="w-[90%] aspect-square mx-auto overflow-hidden rounded-3xl border-2 border-transparent group-hover:border-accent transition-all shadow-md bg-muted">
+                <img
+                  src={member.photo_url}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </div>
-          </motion.div>
-        ))}
+              <div className="space-y-1 px-1">
+                <h4 className="font-bold text-[1.5rem] leading-tight text-primary dark:text-white">
+                  {member.name}
+                </h4>
+                <p className="text-[0.9rem] text-muted-foreground uppercase tracking-[0.1em] font-bold">
+                  {member.position}
+                </p>
+                <div className="pt-2">
+                  {linkedinUrl && (
+                    <a
+                      href={linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-accent text-[0.8rem] font-black uppercase tracking-widest hover:underline decoration-2 underline-offset-4"
+                    >
+                      <Linkedin className="w-3.5 h-3.5 mr-1.5" /> LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
 
       <motion.div

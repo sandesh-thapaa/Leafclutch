@@ -15,11 +15,11 @@ export default function TrainingInternship() {
         icon={service.icon}
         backgroundImage={service.heroImage}
         backgroundSize={service?.backgroundSize}
-      />
+      />  
       <Features features={service.features} />
       <ProgramStructure phases={service.programStructure} />
       <Benefits benefits={service.benefits} />
-      <PricingSection categories={service.pricingCategories} />
+      <PricingSection />
       <FinalCTA />
     </div>
   );

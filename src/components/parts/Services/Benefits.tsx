@@ -1,6 +1,7 @@
 import React from "react";
 import type { Benefit } from "./types";
 
+
 interface BenefitsProps {
   benefits: Benefit[];
 }
@@ -8,7 +9,6 @@ interface BenefitsProps {
 const Benefits: React.FC<BenefitsProps> = ({ benefits }) => {
   return (
     <section className="py-32 bg-white dark:bg-gray-950 relative overflow-hidden">
-      {/* Subtle Background Decoration */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl pointer-events-none opacity-20">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 dark:bg-mint/5 blur-[120px] rounded-full" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 blur-[120px] rounded-full" />
@@ -50,7 +50,6 @@ const Benefits: React.FC<BenefitsProps> = ({ benefits }) => {
                   {benefit.description}
                 </p>
 
-                {/* Decorative underline appearing on hover */}
                 <div className="mt-6 w-0 h-1 bg-mint rounded-full transition-all duration-500 group-hover:w-12" />
               </div>
             </div>

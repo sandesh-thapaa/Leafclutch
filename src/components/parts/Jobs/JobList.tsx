@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   MapPin,
   Briefcase,
@@ -6,108 +6,42 @@ import {
   Building2,
   CheckCircle2,
 } from "lucide-react";
-
-interface JobOption {
-  title: string;
-  department: string;
-  type: string;
-  experience: string;
-  location: string;
-  salary: string;
-  requirements: string[];
-}
-
-const jobs: JobOption[] = [
-  {
-    title: "Senior Full Stack Engineer",
-    department: "Engineering",
-    type: "Full-time",
-    experience: "Senior",
-    location: "Remote",
-    salary: "$140k - $180k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-  {
-    title: "Product Designer (UX/UI)",
-    department: "Design",
-    type: "Full-time",
-    experience: "Mid-Senior",
-    location: "Hybrid (KTM)",
-    salary: "$110k - $150k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-  {
-    title: "Backend Infrastructure Lead",
-    department: "Engineering",
-    type: "Full-time",
-    experience: "Staff/Lead",
-    location: "Remote",
-    salary: "$160k - $210k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-  {
-    title: "Product Marketing Manager",
-    department: "Marketing",
-    type: "Full-time",
-    experience: "Mid",
-    location: "Remote",
-    salary: "$95k - $130k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-  {
-    title: "Technical Support Engineer",
-    department: "Success",
-    type: "Full-time",
-    experience: "Entry-Mid",
-    location: "Remote",
-    salary: "$70k - $95k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-  {
-    title: "DevOps Architect",
-    department: "Infrastructure",
-    type: "Full-time",
-    experience: "Senior",
-    location: "Remote",
-    salary: "$150k - $190k",
-    requirements: [
-      "5+ years of experience in Python and JavaScript (React/Node.js)",
-      "Strong understanding of cloud services (AWS/GCP)",
-      "Experience with distributed systems architecture",
-      "Proven track record of technical mentorship",
-    ],
-  },
-];
+import {
+  opportunityApi,
+  type OpportunityResponse,
+} from "../../../services/opportunityService";
 
 const emailRecipient = "careers@leafclutchtech.com.np";
-const SHOW_JOBS = false;
 
 export const JobList: React.FC = () => {
+  const [jobs, setJobs] = useState<OpportunityResponse[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const data = await opportunityApi.getAll();
+        // Filter strictly for JOB type
+        const filtered = data.filter((opp) => opp.type === "JOB");
+        setJobs(filtered);
+      } catch (err) {
+        console.error("Failed to load jobs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-24 text-center font-bold animate-pulse text-primary">
+        Checking for open positions...
+      </div>
+    );
+  }
+
   return (
     <section id="jobs" className="py-24 bg-muted/50 px-4 ">
       <div className="max-w-7xl mx-auto grid place-items-center">
@@ -123,10 +57,10 @@ export const JobList: React.FC = () => {
           </p>
         </div>
 
-        {/* commented code */}
-        {SHOW_JOBS && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
-            {jobs.map((job, index) => {
+        {/* Show jobs only if the array isn't empty */}
+        {jobs.length > 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+            {jobs.map((job) => {
               const body = `Hello,
 
 I would like to apply for the ${job.title} position. Here is my information:
@@ -140,32 +74,31 @@ Thank you.
 `;
 
               const mailtoLink = `mailto:${emailRecipient}?subject=Job Application: ${encodeURIComponent(
-                job.title
+                job.title,
               )}&body=${encodeURIComponent(body)}`;
+
               return (
                 <div
-                  key={index}
-                  className="max-w-2xl w-full bg-card rounded-[2rem] border-2 border-border shadow-sm overflow-hidden flex flex-col relative group transition-all duration-300 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2"
+                  key={job.id}
+                  className="max-w-2xl w-full bg-card rounded-[2rem] border-2 border-border shadow-sm overflow-hidden flex flex-col relative group transition-all duration-300 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2 mx-auto"
                 >
-                  {/* Main Content Padding */}
                   <div className="p-8 pb-4">
-                    {/* Header Section */}
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                         {job.title}
                       </h2>
                       <div className="flex items-center gap-2 text-accent font-bold tracking-widest text-xs">
                         <Building2 size={16} />
-                        <span className="uppercase">{job.department}</span>
+                        <span className="uppercase">Engineering</span>{" "}
+                        {/* Defaulting to Engineering if not in API */}
                       </div>
                     </div>
 
-                    {/* Metadata Grid */}
                     <div className="grid grid-cols-2 gap-y-4 mb-8">
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Briefcase size={18} />
                         <span className="text-sm font-medium">
-                          {job.type} • {job.experience}
+                          Full-time • Professional
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -177,18 +110,19 @@ Thank you.
                       <div className="flex items-center gap-2 text-card-foreground font-bold col-span-2">
                         <DollarSign size={18} className="text-primary" />
                         <span className="text-lg text-primary">
-                          {job.salary}
+                          <span>
+                            {job.job_details?.salary_range || "Negotiable"}
+                          </span>
                         </span>
                       </div>
                     </div>
 
-                    {/* Requirements Section */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-bold text-card-foreground">
                         Key Requirements
                       </h3>
                       <ul className="space-y-3">
-                        {job.requirements.map((req, index) => (
+                        {job.requirements?.map((req, index) => (
                           <li
                             key={index}
                             className="flex items-start gap-3 group/item"
@@ -209,40 +143,30 @@ Thank you.
                     </div>
                   </div>
 
-                  {/* Apply Button Footer */}
                   <a
                     href={mailtoLink}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="mt-auto"
                   >
-                    <div className="mt-4 px-4 pb-4 flex justify-center translate-y-2">
+                    <div className="px-4 pb-8 flex justify-center">
                       <button className="w-[90%] bg-primary text-primary-foreground font-bold py-4 px-8 rounded-2xl shadow-lg hover:opacity-90 transition-all duration-200 active:scale-[0.98] flex items-center justify-center">
                         Apply Now
                       </button>
                     </div>
                   </a>
-
-                  {/* Small base padding */}
-                  <div className="h-4" />
                 </div>
               );
             })}
           </div>
+        ) : (
+          /* Empty State: Only shows if the API returns no jobs */
+          <div className="mt-8 p-12 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-primary max-w-3xl mx-auto text-center w-full">
+            <p className="text-[2rem] text-gray-500 dark:text-gray-400 italic">
+              "We're currently not hiring."
+            </p>
+          </div>
         )}
-
-        <div className="mt-8 p-8 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-primary max-w-3xl mx-auto text-center">
-          <p className="text-[2rem] text-gray-500 dark:text-gray-400 italic">
-            "We're currently not hiring."
-          </p>
-        </div>
-        {/* <div className="mt-16 text-center">
-          <p className="text-muted-foreground">
-            Don't see a perfect fit?{" "}
-            <a href="#" className="text-primary font-bold hover:underline">
-              Send us your CV anyway!
-            </a>
-          </p>
-        </div> */}
       </div>
     </section>
   );
