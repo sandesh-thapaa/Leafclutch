@@ -2,6 +2,7 @@ import axiosInstance from "../api/axios";
 
 export interface MemberResponse {
   id: string;
+  created_at: string;
   photo_url: string;
   name: string;
   position: string;
@@ -13,7 +14,7 @@ export interface MemberResponse {
 export const memberApi = {
   getTeams: async (): Promise<MemberResponse[]> => {
     try {
-      const res = await axiosInstance.get("/admin/members/teams"); 
+      const res = await axiosInstance.get("/admin/members/teams");
       return Array.isArray(res.data) ? res.data : [];
     } catch (error) {
       console.error("Teams API Error:", error);
@@ -28,5 +29,5 @@ export const memberApi = {
       console.error("Interns API Error:", error);
       return [];
     }
-  }
+  },
 };

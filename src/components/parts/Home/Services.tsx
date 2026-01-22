@@ -81,8 +81,17 @@ const Services: React.FC = () => {
         const data = await serviceApi.getAll();
 
         // Ensure data is an array before attempting to slice
-        const serviceList = Array.isArray(data) ? data : [];
-        setServices(serviceList.slice(0, 6));
+        const serviceList = Array.isArray(data)
+          ? [...data].sort(
+              (a, b) =>
+                new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime(),
+            )
+          : [];
+
+        // console.log(serviceList);
+        // setServices(serviceList.slice(0, 6));
+        setServices(serviceList);
       } catch (err) {
         console.error("Home Services fetch failed:", err);
       } finally {

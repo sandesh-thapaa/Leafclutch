@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   MapPin,
   Briefcase,
-  DollarSign,
+  // DollarSign,
   Building2,
   CheckCircle2,
 } from "lucide-react";
@@ -10,6 +10,7 @@ import {
   opportunityApi,
   type OpportunityResponse,
 } from "../../../services/opportunityService";
+import JobCardSkeleton from "./JobCardSkeleton";
 
 const emailRecipient = "careers@leafclutchtech.com.np";
 
@@ -34,14 +35,6 @@ export const JobList: React.FC = () => {
     fetchJobs();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="py-24 text-center font-bold animate-pulse text-primary">
-        Checking for open positions...
-      </div>
-    );
-  }
-
   return (
     <section id="jobs" className="py-24 bg-muted/50 px-4 ">
       <div className="max-w-7xl mx-auto grid place-items-center">
@@ -58,7 +51,14 @@ export const JobList: React.FC = () => {
         </div>
 
         {/* Show jobs only if the array isn't empty */}
-        {jobs.length > 0 ? (
+
+        {loading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+            {Array.from({ length: 2 }).map((_, idx) => (
+              <JobCardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : jobs.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
             {jobs.map((job) => {
               const body = `Hello,
@@ -89,7 +89,9 @@ Thank you.
                       </h2>
                       <div className="flex items-center gap-2 text-accent font-bold tracking-widest text-xs">
                         <Building2 size={16} />
-                        <span className="uppercase">Engineering</span>{" "}
+                        <span className="uppercase">
+                          {job.description}
+                        </span>{" "}
                         {/* Defaulting to Engineering if not in API */}
                       </div>
                     </div>
@@ -98,7 +100,7 @@ Thank you.
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Briefcase size={18} />
                         <span className="text-sm font-medium">
-                          Full-time • Professional
+                          {job.job_details?.employment_type || "Full-time"}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -108,8 +110,9 @@ Thank you.
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-card-foreground font-bold col-span-2">
-                        <DollarSign size={18} className="text-primary" />
+                        {/* <DollarSign size={18} className="text-primary" /> */}
                         <span className="text-lg text-primary">
+                          <span>Rs.</span>
                           <span>
                             {job.job_details?.salary_range || "Negotiable"}
                           </span>

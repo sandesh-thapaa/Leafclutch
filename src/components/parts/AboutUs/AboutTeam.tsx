@@ -29,8 +29,17 @@ const AboutTeam: React.FC = () => {
       try {
         setLoading(true);
         const data = await memberApi.getTeams();
+
+        const teamList = Array.isArray(data)
+          ? [...data].sort(
+              (a, b) =>
+                new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime(),
+            )
+          : [];
+        // console.log(data);
         // Only show members marked as visible on the backend
-        setMembers(data.filter((m) => m.is_visible));
+        setMembers(teamList.filter((m) => m.is_visible));
       } catch (err) {
         console.error("Failed to load team members:", err);
       } finally {

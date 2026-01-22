@@ -43,7 +43,8 @@ export default function Services() {
         if (data) {
           const mappedData: MappedService = {
             title: data.title,
-            subtitle: data.description,
+            // subtitle: data.description,
+            subtitle: "",
             icon: null,
             heroImage: data.photo_url || "/default-hero.jpg",
             backgroundSize: "cover",

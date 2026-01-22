@@ -1,5 +1,7 @@
 import React from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, 
+  // Sparkles 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface HeroProps {
@@ -44,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({
           {/* Elegant Subtitle */}
           <div className="flex justify-center mb-1">
             <span className="flex items-center px-4 py-2 rounded-full glass-card border-white/20 text-xs md:text-sm font-bold tracking-widest uppercase text-mint text-glow">
-              <Sparkles className="w-4 h-4 mr-2" />
+              {/* <Sparkles className="w-4 h-4 mr-2" /> */}
               {subtitle}
             </span>
           </div>

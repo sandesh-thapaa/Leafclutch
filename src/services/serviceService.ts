@@ -3,6 +3,7 @@ import axiosInstance from "../api/axios";
 export interface ServiceResponse {
   id: string;
   title: string;
+  created_at: string;
   description: string;
   photo_url: string;
   techs: string[];

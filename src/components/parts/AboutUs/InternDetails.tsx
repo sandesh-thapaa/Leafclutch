@@ -34,7 +34,15 @@ const InternshipDetails: React.FC = () => {
       try {
         setLoading(true);
         const data = await memberApi.getInterns();
-        setInterns(data.filter((m) => m.is_visible));
+
+        const internList = Array.isArray(data)
+          ? [...data].sort(
+              (a, b) =>
+                new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime(),
+            )
+          : [];
+        setInterns(internList.filter((m) => m.is_visible));
       } catch (err) {
         console.error("Failed to load interns:", err);
       } finally {

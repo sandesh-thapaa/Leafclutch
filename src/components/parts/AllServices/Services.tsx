@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, LayoutGrid } from "lucide-react"; 
+import { Check, ArrowRight, LayoutGrid } from "lucide-react";
 import { Link } from "react-router-dom";
-import { serviceApi, type ServiceResponse } from "../../../services/serviceService";
+import {
+  serviceApi,
+  type ServiceResponse,
+} from "../../../services/serviceService";
 
 interface LocalServiceCardProps {
   id: string;
@@ -29,9 +32,9 @@ const ServiceCard: React.FC<{
 
       <div className="relative z-10 flex flex-col items-center">
         <div className="w-1/2 h-[12rem] rounded-xl flex items-center justify-center text-primary dark:text-mint mb-4 ">
-           <div className="p-6 bg-mint/10 rounded-full">
-              <LayoutGrid size={48} className="text-mint" />
-           </div>
+          <div className="p-6 bg-mint/10 rounded-full">
+            <LayoutGrid size={48} className="text-mint" />
+          </div>
         </div>
 
         <h3 className="text-3xl font-bold mb-4 text-[#081E67] dark:text-white tracking-tight text-center">
@@ -82,18 +85,23 @@ const Services: React.FC = () => {
       try {
         setLoading(true);
         // FIXED: Changed companyApi.getServices() to serviceApi.getAll()
-        const data = await serviceApi.getAll();         
-        
+        const data = await serviceApi.getAll();
+
         // Safety check to ensure data is an array
         const serviceData = Array.isArray(data) ? data : [];
-        
-        const mapped = serviceData.map((s: ServiceResponse) => ({
+
+        const sortedServices = serviceData.sort(
+          (a, b) =>
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+        );
+
+        const mapped = sortedServices.map((s: ServiceResponse) => ({
           id: s.id,
           title: s.title,
           description: s.description,
           features: s.offerings || [], // Added fallback for offerings
-          href: `/services/${s.id}`, 
-          icon: null 
+          href: `/services/${s.id}`,
+          icon: null,
         }));
 
         setDbServices(mapped);
@@ -106,14 +114,18 @@ const Services: React.FC = () => {
     fetchAll();
   }, []);
 
-  if (loading) return (
-    <div className="py-24 text-center text-primary font-bold animate-pulse">
-      Loading services grid...
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="py-24 text-center text-primary font-bold animate-pulse">
+        Loading services grid...
+      </div>
+    );
 
   return (
-    <section id="services" className="py-24 bg-[#f8fafc] dark:bg-slate-950 border-b">
+    <section
+      id="services"
+      className="py-24 bg-[#f8fafc] dark:bg-slate-950 border-b"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-primary dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">

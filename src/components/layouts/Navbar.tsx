@@ -71,11 +71,17 @@ export function Navbar() {
     const getNavbarData = async () => {
       try {
         const data = await serviceApi.getAll(); // Map the backend 'title' and 'id' to the frontend 'name' and 'href'
-        console.log(data);
-        const mappedServices = data.map((s) => ({
-          name: s.title,
-          href: `/services/${s.id}`,
-        }));
+        // console.log(data);
+        const mappedServices = data
+          .sort(
+            (a, b) =>
+              new Date(a.created_at).getTime() -
+              new Date(b.created_at).getTime(),
+          )
+          .map((s) => ({
+            name: s.title,
+            href: `/services/${s.id}`,
+          }));
 
         // Add the "All Services" link at the start if you want to keep it
         setDynamicServices([
