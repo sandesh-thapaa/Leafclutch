@@ -2,13 +2,17 @@ import axiosInstance from "../api/axios";
 
 export interface MemberResponse {
   id: string;
-  created_at: string;
-  photo_url: string;
   name: string;
+  email?: string;
+  photo_url: string;
   position: string;
+  start_date: string; 
+  end_date: string | null;
   social_media: Record<string, string>;
   is_visible: boolean;
   role: "TEAM" | "INTERN";
+  created_at: string;
+  updated_at?: string;  
 }
 
 export const memberApi = {
