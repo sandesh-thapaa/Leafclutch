@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 
 // const GIF_SRC =
 //   "https://lottie.host/99019f1e-2787-4491-909e-a1b55b5e34d6/ZZ5PylhsXR.lottie";
-const GIF_SRC =
-  "https://lottie.host/a79224ba-dea4-460d-9b0e-71d8b9b54ddf/L6wMRQBhAS.lottie";
+const GIF_SRC = "/Gifs/tech-startup.lottie";
 
 // const HERO_BG = "https://i.postimg.cc/N05X153v/Hero-Bg-Image.jpg";
 

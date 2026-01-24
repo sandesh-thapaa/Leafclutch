@@ -17,18 +17,12 @@ import CardSkeleton from "./CardSkeleton";
  */
 const RenderServiceMedia = ({ service }: { service: ServiceResponse }) => {
   const animations: Record<string, string> = {
-    "Web Development":
-      "https://lottie.host/2ce4fd10-cf6e-472c-84f0-d7ed4221a19c/wPbVH9oZ8u.lottie",
-    "Mobile App Development":
-      "https://lottie.host/49dbf432-a55a-4721-bd96-4b660dedbb0e/ufJQbyW1ci.lottie",
-    "DevOps Solutions":
-      "https://lottie.host/d9d80db0-2de5-4883-ad60-9187c7fd57f1/DoraQiPibU.lottie",
-    Cybersecurity:
-      "https://lottie.host/75c8b880-479b-4eb2-ab86-b6eeb1ca045d/VMO59MdVIj.lottie",
-    "Data Science & AI":
-      "https://lottie.host/dcef0e14-4941-41f4-81b2-efc5401e646f/vwF0QOlEn6.lottie",
-    "Digital Marketing":
-      "https://lottie.host/ad0b5708-d705-4737-9622-2f144060ede9/wKfV30hrDN.lottie",
+    "Web Development": "/Gifs/web.lottie",
+    "Mobile App Development": "/Gifs/mobile.lottie",
+    "DevOps Solutions": "/Gifs/devops.lottie",
+    Cybersecurity: "/Gifs/cyber.lottie",
+    "Data Science & AI": "/Gifs/ai.lottie",
+    "Digital Marketing": "/Gifs/marketing.lottie",
   };
 
   const lottieSrc = animations[service.title];
